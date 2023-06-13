@@ -821,47 +821,170 @@
                                 </v-col>   
                                 
                                 <v-col cols="12" class="mt-n5 mt-md-5"  sm="12" md="3">   
-                                    <v-select 
-                                           
-                                           outlined dense 
-                                           :rules="rules"
-                                               :items="['Communication', 
-                                               'Conflict Resolution', 
-                                               'Negotiation Skills', 'Patience', 
-                                               'Trustworthiness',
-                                               'Empathy',
-                                               'Active listening ',
-                                               'Responsive Body Language',
-                                               'Self-Confidence',
-                                               'Collaboration',
-                                               'Creative Thinking',
-                                               'Customer Service Skills',
-                                               'Flexibility',
-                                               'Persuasion Skills',
-                                               'Charisma',
-                                               'Mediation',
-                                               'Networking Skills',
-                                               'Conversation Skills',
-                                               'Social Skills',
-                                               'Teamwork Skills',
-                                               'Open-Mindedness',
-                                               'Humor',
-                                               'Team-Building Skills',
-                                               'Honesty',
-                                               'Problem Solving',
+                                       
+
+        <v-combobox
+        v-model="model"
+        :filter="filter"
+        :hide-no-data="!search"
+        :items="items"
+        :search-input.sync="search"
+        hide-selected
+        multiple
+        small-chips
+        solo
+        outlined
+        label="Skills"
+      >
+        <template v-slot:no-data>
+          <v-list-item>
+            <span class="subheading">Create</span>
+            <v-chip
+              :color="`${colors[nonce - 1]} lighten-3`"
+              label
+              small
+            >
+              {{ search }}
+            </v-chip>
+          </v-list-item>
+        </template>
         
-                                               'Politeness',
-                                               'Motivational Skills',    
-                                               ]"
-                                               label="Skills" prepend-inner-icon="mdi-account-check"
-                                                required></v-select>
+       <template v-slot:selection="{ attrs, item, parent, selected }">
+          <v-chip
+            v-if="item === Object(item)"
+            v-bind="attrs"
+            :color="`${item.color} lighten-3`"
+            :input-value="selected"
+            label
+            small
+          >
+            <span class="pr-2">
+              {{ item.text }}
+            </span>
+            <v-icon
+              small
+              @click="parent.selectItem(item)"
+            >
+              $delete
+            </v-icon>
+          </v-chip>
+        </template> 
+
+        <template v-slot:item="{ index, item }">
+          <v-text-field
+            v-if="editing === item"
+            v-model="editing.text"
+            autofocus
+            flat
+            background-color="transparent"
+            hide-details
+            solo
+            @keyup.enter="edit(index, item)"
+          ></v-text-field>
+          <v-chip
+            v-else
+            :color="`${item.color} lighten-3`"
+            dark
+            label
+            small
+          >
+            {{ item.text }}
+          </v-chip>
+       
+          <!-- <v-list-item-action @click.stop>
+            <v-btn
+              icon
+              @click.stop.prevent="edit(index, item)"
+            >
+              <v-icon>{{ editing !== item ? 'mdi-pencil' : 'mdi-check' }}</v-icon>
+            </v-btn>
+          </v-list-item-action> -->
+        </template>
+      </v-combobox>
+
                                 </v-col>      
                                 
                                 
                                 <v-col cols="12"  class="mt-n9 mt-md-5"  sm="12" md="3">
 
-                                    <v-text-field dense outlined label="Needed Skill/s"
-                                           ></v-text-field>
+                                    <v-combobox
+        v-model="model1"
+        :filter="filter"
+        :hide-no-data="!search"
+        :items="items"
+        :search-input.sync="search"
+        hide-selected
+        multiple
+        small-chips
+        solo
+        outlined
+        label="Needed Skill/s"
+      >
+        <template v-slot:no-data>
+          <v-list-item>
+            <span class="subheading">Create</span>
+            <v-chip
+              :color="`${colors[nonce - 1]} lighten-3`"
+              label
+              small
+            >
+              {{ search }}
+            </v-chip>
+          </v-list-item>
+        </template>
+        
+       <template v-slot:selection="{ attrs, item, parent, selected }">
+          <v-chip
+            v-if="item === Object(item)"
+            v-bind="attrs"
+            :color="`${item.color} lighten-3`"
+            :input-value="selected"
+            label
+            small
+          >
+            <span class="pr-2">
+              {{ item.text }}
+            </span>
+            <v-icon
+              small
+              @click="parent.selectItem(item)"
+            >
+              $delete
+            </v-icon>
+          </v-chip>
+        </template> 
+
+        <template v-slot:item="{ index, item }">
+          <v-text-field
+            v-if="editing === item"
+            v-model="editing.text"
+            autofocus
+            flat
+            background-color="transparent"
+            hide-details
+            solo
+            @keyup.enter="edit(index, item)"
+          ></v-text-field>
+          <v-chip
+            v-else
+            :color="`${item.color} lighten-3`"
+            dark
+            label
+            small
+          >
+            {{ item.text }}
+          </v-chip>
+       
+          <!-- <v-list-item-action @click.stop>
+            <v-btn
+              icon
+              @click.stop.prevent="edit(index, item)"
+            >
+              <v-icon>{{ editing !== item ? 'mdi-pencil' : 'mdi-check' }}</v-icon>
+            </v-btn>
+          </v-list-item-action> -->
+        </template>
+      </v-combobox>
 
                                 </v-col>
 
@@ -929,12 +1052,190 @@ export default {
 
   data () {
     return {
-        e1: 1,
+        e1: 4,
     
+        activator: null,
+      attach: null,
+      colors: ['green', 'purple', 'indigo', 'cyan', 'teal', 'orange'],
+      editing: null,
+      editingIndex: -1,
+      items: [
+      
+
+        {
+          text: 'Communication',
+          color: 'blue',
+        },
+
+        {
+          text: 'Negotiation Skills',
+          color: 'blue',
+        },
+        {
+          text: 'Patience',
+          color: 'blue',
+        },
+        {
+          text: 'Trustworthiness',
+          color: 'blue',
+        },
+        {
+          text: 'Empath',
+          color: 'blue',
+        },
+        {
+          text: 'Active listening',
+          color: 'blue',
+        },
+        {
+          text: 'Responsive Body Language',
+          color: 'blue',
+        },
+        {
+          text: 'Self-Confidence',
+          color: 'blue',
+        },
+        {
+          text: 'Collaboration',
+          color: 'blue',
+        },
+        {
+          text: 'Creative Thinking',
+          color: 'blue',
+        },
+        {
+          text: 'Customer Service Skills',
+          color: 'blue',
+        },
+        {
+          text: 'Flexibility',
+          color: 'blue',
+        },
+        {
+          text: 'Persuasion Skills',
+          color: 'blue',
+        },
+        {
+          text: 'Charisma',
+          color: 'blue',
+        },
+        {
+          text: 'Mediation',
+          color: 'blue',
+        },
+        {
+          text: 'Networking Skills',
+          color: 'blue',
+        },
+        {
+          text: 'Conversation Skills',
+          color: 'blue',
+        },
+        {
+          text: 'Social Skills',
+          color: 'blue',
+        },
+        {
+          text: 'Teamwork Skills',
+          color: 'blue',
+        },
+        {
+          text: 'Open-Mindedness',
+          color: 'blue',
+        },
+        {
+          text: 'Humor',
+          color: 'blue',
+        },
+        {
+          text: 'Team-Building Skills',
+          color: 'blue',
+        },
+        {
+          text: 'Honesty',
+          color: 'blue',
+        },
+        {
+          text: 'Problem Solving',
+          color: 'blue',
+        },
+        {
+          text: 'Politeness',
+          color: 'blue',
+        },
+        {
+          text: 'Motivational Skills',
+          color: 'blue',
+        },
+
+
+      ],
+      nonce: 1,
+      menu: false,
+      model: [
+       /*  {
+          text: 'Foo',
+          color: 'blue',
+        }, */
+      ],
+      x: 0,
+      search: null,
+      y: 0,
     }
 
-  }
+
+    
+
+
+  },
   
+  watch: {
+      model (val, prev) {
+        if (val.length === prev.length) return
+
+        this.model = val.map(v => {
+          if (typeof v === 'string') {
+            v = {
+              text: v,
+              color: this.colors[this.nonce - 1],
+            }
+
+            this.items.push(v)
+
+            this.nonce++
+          }
+
+          return v
+        })
+      },
+    },
+
+
+
+    methods: {
+      edit (index, item) {
+        if (!this.editing) {
+          this.editing = item
+          this.editingIndex = index
+        } else {
+          this.editing = null
+          this.editingIndex = -1
+        }
+      },
+      filter (item, queryText, itemText) {
+        if (item.header) return false
+
+        const hasValue = val => val != null ? val : ''
+
+        const text = hasValue(itemText)
+        const query = hasValue(queryText)
+
+        return text.toString()
+          .toLowerCase()
+          .indexOf(query.toString().toLowerCase()) > -1
+      },
+    },
+
 
     };
 
