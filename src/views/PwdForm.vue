@@ -833,6 +833,7 @@
         multiple
         small-chips
         solo
+        
         outlined
         label="Skills"
       >
@@ -843,6 +844,7 @@
               :color="`${colors[nonce - 1]} lighten-3`"
               label
               small
+
             >
               {{ search }}
             </v-chip>
@@ -917,6 +919,8 @@
         multiple
         small-chips
         solo
+        
+
         outlined
         label="Needed Skill/s"
       >
@@ -1052,7 +1056,7 @@ export default {
 
   data () {
     return {
-        e1: 4,
+        e1: 1,
     
         activator: null,
       attach: null,

@@ -1,15 +1,15 @@
 <template>
     <v-app>
         <NavBar/>
-      <v-data-table  :headers="headers" :items="desserts" sort-by="calories"  class="btn-hover color-1 elevation-10" 
+      <v-data-table  :headers="headers" :items="desserts" sort-by="calories"  class="rounded-xl  elevation-10" 
         :search="search">
   
         <template v-slot:[`item.name`]="{ item }">
   
-          <v-avatar size="40" >
+        <!--   <v-avatar size="40" >
             <img v-bind:src="`/${item.image}`" alt="" class="ml-n2">
           </v-avatar>
-  
+   -->
           {{ item.name }}
   
         </template>
@@ -22,7 +22,7 @@
         </template>
   
         <template v-slot:top>
-          <v-toolbar flat  class=" btn-hover color-1 elevation-1">
+          <v-toolbar flat  class=" btn-hover elevation-1">
   
   
             <v-toolbar-title>{{ msg }}</v-toolbar-title>
@@ -36,19 +36,7 @@
               
           </v-toolbar>
   
-     
-  
-  
-        
-  
-  
         </template>
-  
-  
-  
-  
-  
-  
   
         <template v-slot:no-data>
           <v-btn color="primary" @click="initialize">
