@@ -21,7 +21,7 @@
             </v-list-item>
           </v-list>
         </v-menu>
-        <v-btn text @click="$router.push({ name: 'LogInForm' })">
+        <v-btn outlined @click="$router.push({ name: 'LogInForm' })">
           <span>LOG OUT</span>
           <!--  <v-icon right>exit_to_app</v-icon> -->
         </v-btn>
